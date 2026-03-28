@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297ea6f12bb5fbf4c9a9c7deb0d3a232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  inputReqToChangeCamera: 0
-  maxTimeToChangeCamera: 0
+  inputReqToChangeCamera: 3
+  maxTimeToChangeCamera: 4
 --- !u!1 &745423536
 GameObject:
   m_ObjectHideFlags: 0
