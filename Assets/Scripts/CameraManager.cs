@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -10,8 +11,13 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineCamera frontCamera;
     [SerializeField] private CinemachineCamera backCamera;
     [SerializeField] private CinemachineCamera cutsceneCamera;
+    [SerializeField] private CinemachineCamera rightCamera;
+    [SerializeField] private CinemachineCamera leftCamera;
+
+    [SerializeField] private float blendDuration = 0.5f;
 
     private CinemachineCamera currentCamera;
+    private IEnumerator coroutine;
 
     private void Awake()
     {
@@ -38,6 +44,14 @@ public class CameraManager : MonoBehaviour
                 if (currentCamera != backCamera)
                     ActivateCamera(backCamera);
                 break;
+            case ActivableCamera.RightCamera:
+                if (currentCamera != rightCamera)
+                    ActivateCamera(rightCamera);
+                break;
+            case ActivableCamera.LeftCamera:
+                if (currentCamera != leftCamera)
+                    ActivateCamera(leftCamera);
+                break;
             case ActivableCamera.CutsceneCamera:
                 if (currentCamera != cutsceneCamera)
                     ActivateCamera(cutsceneCamera);
@@ -48,12 +62,9 @@ public class CameraManager : MonoBehaviour
     /// <summary>
     /// Switch the front camera to the back or vice-versa.
     /// </summary>
-    public void SwitchFrontAndBackCamera()
+    public void SwitchFrontAndBackCamera(ActivableCamera activableCamera)
     {
-        if (currentCamera != frontCamera)
-            ActivateCamera(frontCamera);
-        else
-            ActivateCamera(backCamera);
+        StartCoroutine(SwitchRoutine(activableCamera));
     }
 
     private void ActivateCamera(CinemachineCamera targetCam)
@@ -61,9 +72,26 @@ public class CameraManager : MonoBehaviour
         frontCamera.Priority = 0;
         backCamera.Priority = 0;
         cutsceneCamera.Priority = 0;
+        rightCamera.Priority = 0;
+        leftCamera.Priority = 0;
 
         targetCam.Priority = 100;
         currentCamera = targetCam;
+    }
+
+    private IEnumerator SwitchRoutine(ActivableCamera activableCamera)
+    {
+        ActivableCamera endTransitionCamera;
+        if (currentCamera != frontCamera)
+            endTransitionCamera = ActivableCamera.FrontCamera;
+        else
+            endTransitionCamera = ActivableCamera.BackCamera;
+
+        ActivateCamera(activableCamera);
+
+        yield return new WaitForSeconds(blendDuration);
+
+        ActivateCamera(endTransitionCamera);
     }
 }
 
@@ -71,5 +99,7 @@ public enum ActivableCamera
 {
     FrontCamera,
     BackCamera,
-    CutsceneCamera
+    CutsceneCamera,
+    RightCamera,
+    LeftCamera
 }

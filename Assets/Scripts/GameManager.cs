@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
     private void SwitchCameraToLeft()
     {
         if (RegisterInput(CountableInput.LeftArrow))
-            cameraManager.SwitchFrontAndBackCamera();
+            cameraManager.SwitchFrontAndBackCamera(ActivableCamera.LeftCamera);
     }
 
     private void SwitchCameraToRight()
     {
         if (RegisterInput(CountableInput.RightArrow))
-            cameraManager.SwitchFrontAndBackCamera();
+            cameraManager.SwitchFrontAndBackCamera(ActivableCamera.RightCamera);
     }
 
     private void PushButton()
