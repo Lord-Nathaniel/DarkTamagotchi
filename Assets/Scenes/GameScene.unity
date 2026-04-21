@@ -219,15 +219,15 @@ Transform:
   m_GameObject: {fileID: 145659272}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.42, y: -0.67, z: -0.39}
-  m_LocalScale: {x: 0.2, y: 0.20000006, z: 0.20000006}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 745423540}
   - {fileID: 435520881}
   - {fileID: 827780824}
   - {fileID: 1320737758}
   - {fileID: 919589166}
+  - {fileID: 745423540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &243642410
@@ -689,8 +689,8 @@ GameObject:
   - component: {fileID: 435520880}
   - component: {fileID: 435520879}
   - component: {fileID: 435520878}
-  m_Layer: 0
-  m_Name: ButtonLeft
+  m_Layer: 7
+  m_Name: LeftButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -785,7 +785,7 @@ Transform:
   m_GameObject: {fileID: 435520877}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 745423539}
   - component: {fileID: 745423538}
   - component: {fileID: 745423537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Egg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,8 +1013,8 @@ GameObject:
   - component: {fileID: 827780823}
   - component: {fileID: 827780822}
   - component: {fileID: 827780821}
-  m_Layer: 0
-  m_Name: ButtonCenter
+  m_Layer: 7
+  m_Name: MiddleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1109,7 +1109,7 @@ Transform:
   m_GameObject: {fileID: 827780820}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1, y: -0.44999984, z: 0.6}
+  m_LocalPosition: {x: 2.1, y: -1.4, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1164,6 +1164,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &854919931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 854919932}
+  - component: {fileID: 854919933}
+  m_Layer: 0
+  m_Name: ButtonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &854919932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854919931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 979710790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &854919933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854919931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f64c35e71f0f44b8fc8901ceb9096d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonManager
+  leftButton: {fileID: 435520877}
+  middleButton: {fileID: 827780820}
+  rightButton: {fileID: 1320737754}
+  rearButton: {fileID: 919589162}
 --- !u!1 &906576210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,8 +1299,8 @@ GameObject:
   - component: {fileID: 919589165}
   - component: {fileID: 919589164}
   - component: {fileID: 919589163}
-  m_Layer: 0
-  m_Name: ButtonRear
+  m_Layer: 7
+  m_Name: RearButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1385,6 +1433,7 @@ Transform:
   - {fileID: 1379042895}
   - {fileID: 770127470}
   - {fileID: 553622265}
+  - {fileID: 854919932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1142012485
@@ -1539,8 +1588,8 @@ GameObject:
   - component: {fileID: 1320737757}
   - component: {fileID: 1320737756}
   - component: {fileID: 1320737755}
-  m_Layer: 0
-  m_Name: ButtonRight
+  m_Layer: 7
+  m_Name: RightButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1635,7 +1684,7 @@ Transform:
   m_GameObject: {fileID: 1320737754}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.3, y: 0, z: 0.09999988}
+  m_LocalPosition: {x: 4.3, y: -1.4, z: 0.09999988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1686,9 +1735,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
   sceneCamera: {fileID: 330585545}
-  placementLayerMask:
+  buttonLayerMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 128
 --- !u!1 &1431826223
 GameObject:
   m_ObjectHideFlags: 0

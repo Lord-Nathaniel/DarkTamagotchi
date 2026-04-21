@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +12,7 @@ public class GameManager : MonoBehaviour
     // Needed services
     private InputManager inputManager;
     private CameraManager cameraManager;
+    private ButtonManager buttonManager;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         inputManager = ServiceManager.Get<InputManager>();
         cameraManager = ServiceManager.Get<CameraManager>();
+        buttonManager = ServiceManager.Get<ButtonManager>();
 
         inputManager.OnLeftClicked += PushButton;
         inputManager.OnRightArrowClicked += SwitchCameraToRight;
@@ -71,7 +72,12 @@ public class GameManager : MonoBehaviour
 
     private void PushButton()
     {
-        throw new NotImplementedException();
+        Transform transform = inputManager.GetTransformPointedByMouse();
+
+        if (transform != null)
+        {
+            buttonManager.OnButtonClicked(transform);
+        }
     }
 
     private bool RegisterInput(CountableInput inputType)

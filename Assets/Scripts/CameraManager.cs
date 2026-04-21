@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class CameraManager : MonoBehaviour
 
     private CinemachineCamera currentCamera;
     private IEnumerator coroutine;
+    private List<CinemachineCamera> cameras = new();
 
     private void Awake()
     {
@@ -27,6 +29,17 @@ public class CameraManager : MonoBehaviour
     private void OnDestroy()
     {
         ServiceManager.Unregister<CameraManager>();
+    }
+
+    private void Start()
+    {
+        cameras.Add(frontCamera);
+        cameras.Add(backCamera);
+        cameras.Add(cutsceneCamera);
+        cameras.Add(rightCamera);
+        cameras.Add(leftCamera);
+
+        currentCamera = frontCamera;
     }
 
     /// <summary>
@@ -69,11 +82,10 @@ public class CameraManager : MonoBehaviour
 
     private void ActivateCamera(CinemachineCamera targetCam)
     {
-        frontCamera.Priority = 0;
-        backCamera.Priority = 0;
-        cutsceneCamera.Priority = 0;
-        rightCamera.Priority = 0;
-        leftCamera.Priority = 0;
+        foreach (var cam in cameras)
+        {
+            cam.Priority = 0;
+        }
 
         targetCam.Priority = 100;
         currentCamera = targetCam;

@@ -8,7 +8,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private Camera sceneCamera;
-    [SerializeField] private LayerMask placementLayerMask;
+    [SerializeField] private LayerMask buttonLayerMask;
 
     private Vector3 lastPosition;
 
@@ -37,22 +37,25 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
             OnLeftArrowClicked?.Invoke();
+
+        Transform transform = GetTransformPointedByMouse();
     }
 
     /// <summary>
     /// Gives the last mouse position.
     /// -IN- 
     /// </summary>
-    public Vector3 GetSelectedMapPosition()
+    public Transform GetTransformPointedByMouse()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = sceneCamera.nearClipPlane;
         Ray ray = sceneCamera.ScreenPointToRay(mousePos);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, placementLayerMask))
+        if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
         {
-            lastPosition = hit.point;
+            //Debug.Log("[InputManager] Button hit !");
+            //Debug.Log("Object hit : " + hit.transform.name);
+            return hit.transform;
         }
-        return lastPosition;
+        return null;
     }
 }
