@@ -1738,6 +1738,13 @@ MonoBehaviour:
   buttonLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  navigateLeft: {fileID: 8449671099604945320, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  navigateRight: {fileID: 3972408764026787854, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  click: {fileID: -6143445093496615004, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactLeft: {fileID: -3327116416407245643, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactMiddle: {fileID: 6159814546477878760, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactRight: {fileID: -5027385522970369197, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  interactBack: {fileID: 7097949737877011461, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &1431826223
 GameObject:
   m_ObjectHideFlags: 0

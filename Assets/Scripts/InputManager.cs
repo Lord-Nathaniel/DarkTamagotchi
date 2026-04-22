@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// This class manages the keyboard and mouse input.
@@ -10,12 +11,19 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Camera sceneCamera;
     [SerializeField] private LayerMask buttonLayerMask;
 
-    private Vector3 lastPosition;
+    [Header("Navigation")]
+    public InputActionReference navigateLeft;
+    public InputActionReference navigateRight;
 
-    /// <summary>
-    /// -IN- GameManager from Start() and OnDestroy()
-    /// </summary>
-    public event Action OnLeftClicked, OnRightArrowClicked, OnLeftArrowClicked;
+    [Header("Interaction")]
+    public InputActionReference click;
+    public InputActionReference interactLeft;
+    public InputActionReference interactMiddle;
+    public InputActionReference interactRight;
+    public InputActionReference interactBack;
+
+    public event Action OnNavigateLeft, OnNavigateRight;
+    public event Action OnClick, OnInteractLeft, OnInteractMiddle, OnInteractRight, OnInteractBack;
 
     private void Awake()
     {
@@ -27,35 +35,48 @@ public class InputManager : MonoBehaviour
         ServiceManager.Unregister<GameManager>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetMouseButtonDown(0))
-            OnLeftClicked?.Invoke();
+        navigateLeft.action.started += HandleNavigateLeft;
+        navigateRight.action.started += HandleNavigateRight;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            OnRightArrowClicked?.Invoke();
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-            OnLeftArrowClicked?.Invoke();
-
-        Transform transform = GetTransformPointedByMouse();
+        click.action.started += HandleClick;
+        interactLeft.action.started += HandleInteractLeft;
+        interactMiddle.action.started += HandleInteractMiddle;
+        interactRight.action.started += HandleInteractRight;
+        interactBack.action.started += HandleInteractBack;
     }
 
-    /// <summary>
-    /// Gives the last mouse position.
-    /// -IN- 
-    /// </summary>
-    public Transform GetTransformPointedByMouse()
+    private void OnDisable()
     {
-        Vector3 mousePos = Input.mousePosition;
-        Ray ray = sceneCamera.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
-        {
-            //Debug.Log("[InputManager] Button hit !");
-            //Debug.Log("Object hit : " + hit.transform.name);
-            return hit.transform;
-        }
-        return null;
+        navigateLeft.action.started -= HandleNavigateLeft;
+        navigateRight.action.started -= HandleNavigateRight;
+
+        click.action.started -= HandleClick;
+        interactLeft.action.started -= HandleInteractLeft;
+        interactMiddle.action.started -= HandleInteractMiddle;
+        interactRight.action.started -= HandleInteractRight;
+        interactBack.action.started -= HandleInteractBack;
     }
+
+    private void HandleClick(InputAction.CallbackContext ctx)
+        => OnClick?.Invoke();
+
+    private void HandleNavigateLeft(InputAction.CallbackContext ctx)
+        => OnNavigateLeft?.Invoke();
+
+    private void HandleNavigateRight(InputAction.CallbackContext ctx)
+        => OnNavigateRight?.Invoke();
+
+    private void HandleInteractLeft(InputAction.CallbackContext ctx)
+        => OnInteractLeft?.Invoke();
+
+    private void HandleInteractMiddle(InputAction.CallbackContext ctx)
+        => OnInteractMiddle?.Invoke();
+
+    private void HandleInteractRight(InputAction.CallbackContext ctx)
+        => OnInteractRight?.Invoke();
+
+    private void HandleInteractBack(InputAction.CallbackContext ctx)
+        => OnInteractBack?.Invoke();
 }

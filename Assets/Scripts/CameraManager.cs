@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// This class manages the Cinamachine cameras and its transitions.
@@ -20,6 +21,9 @@ public class CameraManager : MonoBehaviour
     private CinemachineCamera currentCamera;
     private IEnumerator coroutine;
     private List<CinemachineCamera> cameras = new();
+
+    // Needed services
+    private InputManager inputManager;
 
     private void Awake()
     {
@@ -40,6 +44,11 @@ public class CameraManager : MonoBehaviour
         cameras.Add(leftCamera);
 
         currentCamera = frontCamera;
+    }
+
+    private void MoveCamera(InputAction.CallbackContext obj)
+    {
+        Debug.Log("move : " + obj);
     }
 
     /// <summary>
@@ -104,6 +113,26 @@ public class CameraManager : MonoBehaviour
         yield return new WaitForSeconds(blendDuration);
 
         ActivateCamera(endTransitionCamera);
+    }
+
+
+    /// <summary>
+    /// Gives the last mouse position.
+    /// -IN- 
+    /// </summary>
+    public Transform GetTransformPointedByMouse()
+    {
+        //Vector3 mousePos = Input.mousePosition;
+        //Ray ray = sceneCamera.ScreenPointToRay(mousePos);
+        //RaycastHit hit;
+        //if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
+        //{
+        //    //Debug.Log("[InputManager] Button hit !");
+        //    //Debug.Log("Object hit : " + hit.transform.name);
+        //    return hit.transform;
+        //}
+
+        return null;
     }
 }
 

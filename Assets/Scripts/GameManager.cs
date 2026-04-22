@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
     {
         ServiceManager.Unregister<GameManager>();
 
-        inputManager.OnLeftClicked -= PushButton;
-        inputManager.OnRightArrowClicked -= SwitchCameraToRight;
-        inputManager.OnLeftArrowClicked -= SwitchCameraToLeft;
+        //inputManager.OnLeftClicked -= PushButton;
+        //inputManager.OnRightArrowClicked -= SwitchCameraToRight;
+        //inputManager.OnLeftArrowClicked -= SwitchCameraToLeft;
     }
 
     private void Start()
@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
         cameraManager = ServiceManager.Get<CameraManager>();
         buttonManager = ServiceManager.Get<ButtonManager>();
 
-        inputManager.OnLeftClicked += PushButton;
-        inputManager.OnRightArrowClicked += SwitchCameraToRight;
-        inputManager.OnLeftArrowClicked += SwitchCameraToLeft;
+        //inputManager.OnLeftClicked += PushButton;
+        //inputManager.OnRightArrowClicked += SwitchCameraToRight;
+        //inputManager.OnLeftArrowClicked += SwitchCameraToLeft;
     }
 
     private void Update()
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     private void PushButton()
     {
-        Transform transform = inputManager.GetTransformPointedByMouse();
+        //Transform transform = inputManager.GetTransformPointedByMouse();
 
         if (transform != null)
         {
