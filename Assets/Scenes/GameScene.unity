@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 553622265}
   - component: {fileID: 553622266}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameKeyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,11 +995,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd8e9d9410a1ed46a78e8f1552b331f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CNMCameraManager
+  sceneCamera: {fileID: 330585545}
   frontCamera: {fileID: 906576212}
   backCamera: {fileID: 1819825124}
   cutsceneCamera: {fileID: 385321169}
   rightCamera: {fileID: 1598285797}
   leftCamera: {fileID: 106311410}
+  buttonLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   blendDuration: 0.5
 --- !u!1 &827780820
 GameObject:
@@ -1734,10 +1738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd1669e3076d684c9978bfca1e6eb65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  sceneCamera: {fileID: 330585545}
-  buttonLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
   navigateLeft: {fileID: 8449671099604945320, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   navigateRight: {fileID: 3972408764026787854, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   click: {fileID: -6143445093496615004, guid: 052faaac586de48259a63d0c4782560b, type: 3}
