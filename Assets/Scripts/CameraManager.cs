@@ -10,20 +10,20 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
     [Header("Cameras List")]
+    [SerializeField] private Camera sceneCamera;
     [SerializeField] private CinemachineCamera frontCamera;
     [SerializeField] private CinemachineCamera backCamera;
     [SerializeField] private CinemachineCamera cutsceneCamera;
     [SerializeField] private CinemachineCamera rightCamera;
     [SerializeField] private CinemachineCamera leftCamera;
 
+    [SerializeField] private LayerMask buttonLayerMask;
+
     [SerializeField] private float blendDuration = 0.5f;
 
     private CinemachineCamera currentCamera;
     private IEnumerator coroutine;
     private List<CinemachineCamera> cameras = new();
-
-    // Needed services
-    private InputManager inputManager;
 
     private void Awake()
     {
@@ -37,6 +37,11 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
+        SetupCameras();
+    }
+
+    private void SetupCameras()
+    {
         cameras.Add(frontCamera);
         cameras.Add(backCamera);
         cameras.Add(cutsceneCamera);
@@ -44,11 +49,6 @@ public class CameraManager : MonoBehaviour
         cameras.Add(leftCamera);
 
         currentCamera = frontCamera;
-    }
-
-    private void MoveCamera(InputAction.CallbackContext obj)
-    {
-        Debug.Log("move : " + obj);
     }
 
     /// <summary>
@@ -81,14 +81,6 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Switch the front camera to the back or vice-versa.
-    /// </summary>
-    public void SwitchFrontAndBackCamera(ActivableCamera activableCamera)
-    {
-        StartCoroutine(SwitchRoutine(activableCamera));
-    }
-
     private void ActivateCamera(CinemachineCamera targetCam)
     {
         foreach (var cam in cameras)
@@ -98,6 +90,19 @@ public class CameraManager : MonoBehaviour
 
         targetCam.Priority = 100;
         currentCamera = targetCam;
+    }
+
+    /// <summary>
+    /// Switch the front camera to the back or vice-versa.
+    /// </summary>
+    public void SwitchFrontAndBackCamera(DirectionType direction)
+    {
+        ActivableCamera activableCamera = ActivableCamera.RightCamera;
+
+        if (direction == DirectionType.Left)
+            activableCamera = ActivableCamera.LeftCamera;
+
+        StartCoroutine(SwitchRoutine(activableCamera));
     }
 
     private IEnumerator SwitchRoutine(ActivableCamera activableCamera)
@@ -122,16 +127,13 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     public Transform GetTransformPointedByMouse()
     {
-        //Vector3 mousePos = Input.mousePosition;
-        //Ray ray = sceneCamera.ScreenPointToRay(mousePos);
-        //RaycastHit hit;
-        //if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
-        //{
-        //    //Debug.Log("[InputManager] Button hit !");
-        //    //Debug.Log("Object hit : " + hit.transform.name);
-        //    return hit.transform;
-        //}
-
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Ray ray = sceneCamera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
+        {
+            return hit.transform;
+        }
         return null;
     }
 }
