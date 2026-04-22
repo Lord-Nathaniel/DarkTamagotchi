@@ -3,14 +3,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// This class manages the keyboard and mouse input.
+/// This class manages the keyboard and mouse inputs.
 /// When the player interact with the game, it calls corresponding Actions.
 /// </summary>
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private Camera sceneCamera;
-    [SerializeField] private LayerMask buttonLayerMask;
-
     [Header("Navigation")]
     public InputActionReference navigateLeft;
     public InputActionReference navigateRight;
@@ -22,8 +19,9 @@ public class InputManager : MonoBehaviour
     public InputActionReference interactRight;
     public InputActionReference interactBack;
 
-    public event Action OnNavigateLeft, OnNavigateRight;
-    public event Action OnClick, OnInteractLeft, OnInteractMiddle, OnInteractRight, OnInteractBack;
+    public event Action<DirectionType> OnNavigateDirection;
+    public event Action OnClick;
+    public event Action<KeyType> OnDirectKeyPressed;
 
     private void Awake()
     {
@@ -32,51 +30,65 @@ public class InputManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        ServiceManager.Unregister<GameManager>();
+        ServiceManager.Unregister<InputManager>();
     }
 
     private void OnEnable()
     {
-        navigateLeft.action.started += HandleNavigateLeft;
-        navigateRight.action.started += HandleNavigateRight;
+        navigateLeft.action.performed += HandleNavigateLeft;
+        navigateRight.action.performed += HandleNavigateRight;
 
-        click.action.started += HandleClick;
-        interactLeft.action.started += HandleInteractLeft;
-        interactMiddle.action.started += HandleInteractMiddle;
-        interactRight.action.started += HandleInteractRight;
-        interactBack.action.started += HandleInteractBack;
+        click.action.performed += HandleClick;
+        interactLeft.action.performed += HandleInteractLeft;
+        interactMiddle.action.performed += HandleInteractMiddle;
+        interactRight.action.performed += HandleInteractRight;
+        interactBack.action.performed += HandleInteractBack;
     }
 
     private void OnDisable()
     {
-        navigateLeft.action.started -= HandleNavigateLeft;
-        navigateRight.action.started -= HandleNavigateRight;
+        navigateLeft.action.performed -= HandleNavigateLeft;
+        navigateRight.action.performed -= HandleNavigateRight;
 
-        click.action.started -= HandleClick;
-        interactLeft.action.started -= HandleInteractLeft;
-        interactMiddle.action.started -= HandleInteractMiddle;
-        interactRight.action.started -= HandleInteractRight;
-        interactBack.action.started -= HandleInteractBack;
+        click.action.performed -= HandleClick;
+        interactLeft.action.performed -= HandleInteractLeft;
+        interactMiddle.action.performed -= HandleInteractMiddle;
+        interactRight.action.performed -= HandleInteractRight;
+        interactBack.action.performed -= HandleInteractBack;
     }
 
     private void HandleClick(InputAction.CallbackContext ctx)
         => OnClick?.Invoke();
 
     private void HandleNavigateLeft(InputAction.CallbackContext ctx)
-        => OnNavigateLeft?.Invoke();
+        => OnNavigateDirection?.Invoke(DirectionType.Left);
 
     private void HandleNavigateRight(InputAction.CallbackContext ctx)
-        => OnNavigateRight?.Invoke();
+        => OnNavigateDirection?.Invoke(DirectionType.Right);
 
     private void HandleInteractLeft(InputAction.CallbackContext ctx)
-        => OnInteractLeft?.Invoke();
+        => OnDirectKeyPressed?.Invoke(KeyType.Left);
 
     private void HandleInteractMiddle(InputAction.CallbackContext ctx)
-        => OnInteractMiddle?.Invoke();
+        => OnDirectKeyPressed?.Invoke(KeyType.Middle);
 
     private void HandleInteractRight(InputAction.CallbackContext ctx)
-        => OnInteractRight?.Invoke();
+        => OnDirectKeyPressed?.Invoke(KeyType.Right);
 
     private void HandleInteractBack(InputAction.CallbackContext ctx)
-        => OnInteractBack?.Invoke();
+        => OnDirectKeyPressed?.Invoke(KeyType.Back);
+}
+
+public enum KeyType
+{
+    Left,
+    Middle,
+    Right,
+    Back
+}
+
+public enum DirectionType
+{
+    Left,
+    Right
 }
