@@ -8,13 +8,13 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] GameObject rightButton;
     [SerializeField] GameObject rearButton;
 
+    // Needed services
+    private InputManager inputManager;
+    private CameraManager cameraManager;
+
     private void Awake()
     {
         ServiceManager.Register(this);
-        Debug.Log("Left button : " + leftButton.transform.position.y);
-        Debug.Log(middleButton.transform.position.y);
-        Debug.Log(rightButton.transform.position.y);
-        Debug.Log(rearButton.transform.position.y);
     }
 
     private void OnDestroy()
@@ -22,18 +22,38 @@ public class ButtonManager : MonoBehaviour
         ServiceManager.Unregister<ButtonManager>();
     }
 
+    private void Start()
+    {
+        inputManager = ServiceManager.Get<InputManager>();
+        cameraManager = ServiceManager.Get<CameraManager>();
+
+        inputManager.OnClick += ClickHoveredButton;
+    }
+
+    private void ClickHoveredButton()
+    {
+        Debug.Log("clickHoveredButton");
+        Transform hoveredButtonTransform = cameraManager.GetTransformPointedByMouse();
+
+        if (hoveredButtonTransform != null)
+        {
+            OnButtonClicked(hoveredButtonTransform);
+        }
+    }
+
     public void OnButtonClicked(Transform buttonTransform)
     {
-        if (buttonTransform.gameObject == leftButton)
+        GameObject button = buttonTransform.gameObject;
+        if (button == leftButton)
             DoLeftButtonAction();
 
-        if (buttonTransform.gameObject == middleButton)
+        if (button == middleButton)
             DoMiddleButtonAction();
 
-        if (buttonTransform.gameObject == rightButton)
+        if (button == rightButton)
             DoRightButtonAction();
 
-        if (buttonTransform.gameObject == rearButton)
+        if (button == rearButton)
             DoRearButtonAction();
     }
 
@@ -59,19 +79,19 @@ public class ButtonManager : MonoBehaviour
 
     private void ClickFaceButtonAction(Transform buttonTransform)
     {
-        float YPosition = buttonTransform.position.y;
-        Debug.Log(YPosition);
-        buttonTransform.DOMoveZ(YPosition + 0.3f, 0.2f)
+        float ZPosition = buttonTransform.position.z;
+        Debug.Log(ZPosition);
+        buttonTransform.DOMoveZ(ZPosition + 0.3f, 0.2f)
                        .SetEase(Ease.OutBounce)
-                       .OnComplete(() => buttonTransform.DOMoveZ(YPosition, 0.2f));
+                       .OnComplete(() => buttonTransform.DOMoveZ(ZPosition, 0.2f));
     }
 
     private void ClickRearButtonAction(Transform buttonTransform)
     {
-        float YPosition = buttonTransform.position.y;
-        Debug.Log(YPosition);
-        buttonTransform.DOMoveZ(YPosition - 0.3f, 0.2f)
+        float ZPosition = buttonTransform.position.z;
+        Debug.Log(ZPosition);
+        buttonTransform.DOMoveZ(ZPosition - 0.3f, 0.2f)
                        .SetEase(Ease.OutBounce)
-                       .OnComplete(() => buttonTransform.DOMoveZ(YPosition, 0.2f));
+                       .OnComplete(() => buttonTransform.DOMoveZ(ZPosition, 0.2f));
     }
 }

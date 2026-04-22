@@ -12,7 +12,6 @@ public class GameKeyManager : MonoBehaviour
     // Needed services
     private InputManager inputManager;
     private CameraManager cameraManager;
-    private ButtonManager buttonManager;
 
     private void Awake()
     {
@@ -30,10 +29,7 @@ public class GameKeyManager : MonoBehaviour
     {
         inputManager = ServiceManager.Get<InputManager>();
         cameraManager = ServiceManager.Get<CameraManager>();
-        buttonManager = ServiceManager.Get<ButtonManager>();
 
-
-        inputManager = ServiceManager.Get<InputManager>();
         inputManager.OnNavigateDirection += SwitchCameraByNaviRgationDirection;
     }
 
@@ -49,7 +45,6 @@ public class GameKeyManager : MonoBehaviour
             ResetCounters();
         }
     }
-
 
     private void SwitchCameraByNaviRgationDirection(DirectionType direction)
     {

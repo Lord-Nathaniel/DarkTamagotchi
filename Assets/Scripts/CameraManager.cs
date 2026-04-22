@@ -97,10 +97,10 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     public void SwitchFrontAndBackCamera(DirectionType direction)
     {
-        ActivableCamera activableCamera = ActivableCamera.RightCamera;
+        ActivableCamera activableCamera = ActivableCamera.LeftCamera;
 
         if (direction == DirectionType.Left)
-            activableCamera = ActivableCamera.LeftCamera;
+            activableCamera = ActivableCamera.RightCamera;
 
         StartCoroutine(SwitchRoutine(activableCamera));
     }
@@ -120,14 +120,13 @@ public class CameraManager : MonoBehaviour
         ActivateCamera(endTransitionCamera);
     }
 
-
     /// <summary>
     /// Gives the last mouse position.
     /// -IN- 
     /// </summary>
     public Transform GetTransformPointedByMouse()
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector3 mousePos = Mouse.current.position.ReadValue();
         Ray ray = sceneCamera.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, buttonLayerMask))
